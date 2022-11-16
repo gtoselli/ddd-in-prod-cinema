@@ -1,13 +1,15 @@
 import { MovieEntity } from "./movie.entity";
 import { RoomEntity } from "./room.entity";
-import { ScheduleInfoValueObject } from "./schedule-info.value-object";
 
 export class DailyProgrammingAggregate {
-    constructor(private room: RoomEntity, private movie: MovieEntity, private scheduleInfo: ScheduleInfoValueObject) {}
+    constructor(private room: RoomEntity, private movie: MovieEntity) {}
 
-    static createFactory(room: RoomEntity, movie: MovieEntity, scheduleInfo: ScheduleInfoValueObject) {
+    static factory(roomId: string, roomName: string, roomSeatsNum: number, movieId: string, movieTitle: string, movieDateTime: Date) {
         //TODO create invariants
-        return new DailyProgrammingAggregate(room, movie, scheduleInfo)
+
+        const room = RoomEntity.factory(roomId, roomName, roomSeatsNum)
+        const movie = MovieEntity.factory(movieId, movieTitle, movieDateTime)
+        return new DailyProgrammingAggregate(room, movie)
     }
 
     public deleteCmd() {}
